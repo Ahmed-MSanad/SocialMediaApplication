@@ -1,17 +1,19 @@
-import { User } from "../../db/models/user.model.js";
+import User from "../../db/models/user.model.js";
 import { asyncHandler, compare, encrypt, generateToken, hash} from "../../utils/index.js";
 import { messages } from "../../utils/Messages/index.js";
 
 export const register = asyncHandler(async (req, res, next) => {
 
-  const { userName, email, password, phone } = req.body;
+  const { fullName, email, password, phone, gender, profilePicture } = req.body;
   
 
   const createdUser = await User.create({
-    userName,
+    fullName,
     email,
     password: hash({ password }),
     phone: encrypt({ data: phone }),
+    gender,
+    profilePicture
   });
   
 

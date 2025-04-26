@@ -1,23 +1,27 @@
-import connectDB from "./db/connection.js";
+import connectDb from "./db/connection.js";
 import authRouter from "./modules/auth/auth.controller.js";
 import userRouter from "./modules/user/user.controller.js";
-import postRouter from "./modules/post/post.controller.js";
 import { globalError } from "./utils/Errors/global-error.js";
-import { notFound } from "./utils/index.js";
-
+// import { notFound } from "./utils/index.js";
+import messageRoutes from './modules/message/message.service.js';
+import postRoute from './modules/post/post.controller.js'
 
 const bootstrap = async (app, express) => {
-
   app.use(express.json());
-  await connectDB();
-  app.use("/auth", authRouter);
 
-  app.use("/user", userRouter);
+  await connectDb();
 
-  app.use("/post",postRouter);
+  app.use("/api/message", messageRoutes);
 
-  app.all("*", notFound);
+  app.use("/api/auth", authRouter);
+
+  app.use("/api/user", userRouter);
+
+  app.use("/api/post",postRoute);
+
+  // app.all("*", notFound);
 
   app.use(globalError);
 };
+
 export default bootstrap

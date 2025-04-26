@@ -1,4 +1,4 @@
-import { User } from "../../db/models/user.model.js";
+import User from "../../db/models/user.model.js";
 import { asyncHandler, messages , decrypt } from "../../utils/index.js";
 
 
@@ -16,9 +16,10 @@ export const getProfile =asyncHandler(async (req, res) => {
 
 
   res.status(200).json({
-    userName: user.userName,
+    fullName: user.fullName,
     email: user.email,
     phoneNumber: decryptedPhoneNumber,
+    profilePicture: user.profilePicture
   });
 });
 

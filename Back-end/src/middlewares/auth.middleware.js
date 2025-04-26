@@ -1,4 +1,4 @@
-import { User } from '../db/models/user.model.js';
+import User from '../db/models/user.model.js';
 import { asyncHandler } from '../utils/Errors/async-handler.js';
 import { messages } from '../utils/Messages/index.js';
 import { verify } from '../utils/index.js';
