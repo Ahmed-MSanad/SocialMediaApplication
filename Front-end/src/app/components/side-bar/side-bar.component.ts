@@ -49,6 +49,11 @@ export class SideBarComponent {
       label: 'Users',
       route: 'chatUsersList',
     },
+    {
+      icon:'posts',
+      label: 'Posts',
+      route:'post'
+    }
   ]);
 
   collapsed = signal(true);
