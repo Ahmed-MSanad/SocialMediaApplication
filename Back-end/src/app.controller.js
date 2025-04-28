@@ -1,4 +1,5 @@
 import connectDb from "./db/connection.js";
+import cors from 'cors';
 import authRouter from "./modules/auth/auth.controller.js";
 import userRouter from "./modules/user/user.controller.js";
 import { globalError } from "./utils/Errors/global-error.js";
