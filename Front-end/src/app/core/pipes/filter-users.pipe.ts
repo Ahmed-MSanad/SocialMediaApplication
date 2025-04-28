@@ -8,7 +8,7 @@ export class FilterUsersPipe implements PipeTransform {
 
   transform(allUsers : IProfileUser[] | null, searchUser : string | null): unknown {
     if(allUsers)
-      return allUsers.filter((user) => user.displayName.toLowerCase().includes(searchUser!.toLowerCase()));
+      return allUsers.filter((user) => user.fullName.toLowerCase().includes(searchUser!.toLowerCase()));
     else
       return null;
   }

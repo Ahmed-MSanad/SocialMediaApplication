@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
       SweetAlert2Module.forRoot(),
 			SweetAlert2Module.forChild(),
     ]),
+    provideHttpClient(withFetch()),
   ]
 };

@@ -3,24 +3,24 @@ import { asyncHandler, compare, encrypt, generateToken, hash} from "../../utils/
 import { messages } from "../../utils/Messages/index.js";
 
 export const register = asyncHandler(async (req, res, next) => {
-
-  const { fullName, email, password, phone, gender, profilePicture } = req.body;
-  
-
-  const createdUser = await User.create({
-    fullName,
-    email,
-    password: hash({ password }),
-    phone: encrypt({ data: phone }),
-    gender,
-    profilePicture
-  });
-  
-
-  return res.status(201).json({
-    success: true,
-    message: messages.user.createdSuccessfully
-  });
+  try {
+    console.log('Request body:', req.body);
+    const { fullName, email, password, phone, gender, profilePicture } = req.body;
+    const createdUser = await User.create({
+      fullName,
+      email,
+      password: hash({ password }),
+      phone: encrypt({ data: phone }),
+      gender,
+      profilePicture
+    });
+    return res.status(201).json({
+      success: true,
+      message: messages.user.createdSuccessfully
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
 
 });
 
