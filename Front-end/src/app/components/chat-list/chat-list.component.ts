@@ -37,64 +37,24 @@ import { FilterUsersPipe } from '../../core/pipes/filter-users.pipe';
   templateUrl: './chat-list.component.html',
   styleUrl: './chat-list.component.scss'
 })
-export class ChatListComponent implements OnInit, OnDestroy{
-  // private readonly _AngularFireAuth = inject(AngularFireAuth);
-  private readonly _BreakpointObserver = inject(BreakpointObserver);
-  private readonly _Router = inject(Router);
-  readonly _UserService = inject(UserService);
+export class ChatListComponent implements OnInit{
   readonly _ChatService = inject(ChatService);
 
-  // userChats$ : Observable<IChat[]> = this._ChatService.myChats$; // chats of the currently logged in user.
-  isLargeScreen$ !: Observable<boolean>;
-
-  searchControl = new FormControl('');
   allUsers ! : IProfileUser[];
-  // currentUser : firebase.User | null = null;
 
-  allUsersUnsubscribe ! : Subscription;
-  authStateUnsubscribe ! : Subscription;
-  createChatUnsubscribe ! : Subscription;
-
-
-  ngOnInit(): void {
-      // this.allUsersUnsubscribe = this._UserService.allUsers.subscribe((users) => {
-      //   this.allUsers = users;
-      // })
-
-      // this.authStateUnsubscribe = this._AngularFireAuth.authState.subscribe((user) => {
-      //   if (user) {
-      //     this.currentUser = user;
-      //   }
-      // });
-
-      this.isLargeScreen$ = this._BreakpointObserver.observe(['(min-width: 1024px)'])
-        .pipe(map(result => result.matches));
+  ngOnInit(){
+    this._ChatService.myChats$.subscribe({
+      next: (res) => {
+        this.allUsers = res;
+        console.log(res);
+      },
+      error:(error) => {
+        console.log(error);
+      }
+    });
   }
 
-  
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-  
   createChat(otherUser : IProfileUser){
-      // this.createChatUnsubscribe = this._ChatService.isChatExist(otherUser?.uid).pipe(
-      //   switchMap((chatId) => {
-      //     if(chatId){
-      //       return of(chatId);
-      //     }
-      //     else{
-      //       return this._ChatService.createChat(otherUser);
-      //     }
-      //   })
-      // ).subscribe(chatId => {
-      //   this._ChatService.chatListControl.setValue([chatId]);
-      //   this.isLargeScreen$.subscribe(result => result ? null : this._Router.navigate(['/messages']));
-      // });
-  }
-
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-
-  ngOnDestroy(){
-      this.allUsersUnsubscribe?.unsubscribe();
-      this.authStateUnsubscribe?.unsubscribe();
-      this.createChatUnsubscribe?.unsubscribe();
+    this._ChatService.currentChattingUser.set(otherUser);
   }
 }

@@ -15,6 +15,7 @@ export const getUsersList = async (req, res) => {
 
 export const getOtherUserChattingMessages = async (req, res) => {
     try{
+        console.log(req.params);
         const { otherUserId } = req.params;
         const currentlyLoggedInUserId = req.authUser._id;
 

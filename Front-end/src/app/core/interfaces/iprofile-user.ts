@@ -1,5 +1,5 @@
 export interface IProfileUser {
-    uid: string;
+    _id: string;
     fullName: string;
     email: string;
     profilePicture: string;

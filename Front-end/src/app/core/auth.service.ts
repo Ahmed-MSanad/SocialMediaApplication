@@ -26,7 +26,8 @@ export class AuthService {
       }
       return this.httpClient.get<IProfileUser>(`http://localhost:5001/api/user/profile`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': `bearer ${token}`,
+          'Content-Type':'application/json'
         }
       });
     } else {
