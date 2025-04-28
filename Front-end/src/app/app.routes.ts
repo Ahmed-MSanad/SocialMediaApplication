@@ -5,14 +5,17 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PostComponent } from './components/post/post.component';
 
 export const routes: Routes = [
     {path: '', component: BlankComponent, children: [
-        {path: 'home', component: HomeComponent}
+        {path: 'home', component: HomeComponent},
+        {path:'post',component:PostComponent}
     ]},
     {path: '', component: AuthComponent, children: [
         {path: 'register', component: RegisterComponent},
         {path: 'login', component: LoginComponent},
     ]},
+    
     {path: "**", component: NotFoundComponent}
 ];
