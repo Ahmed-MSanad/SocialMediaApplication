@@ -7,10 +7,10 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
-    {path: 'blank', component: BlankComponent, children: [
+    {path: '', component: BlankComponent, children: [
         {path: 'home', component: HomeComponent}
     ]},
-    {path: 'auth', component: AuthComponent, children: [
+    {path: '', component: AuthComponent, children: [
         {path: 'register', component: RegisterComponent},
         {path: 'login', component: LoginComponent},
     ]},
