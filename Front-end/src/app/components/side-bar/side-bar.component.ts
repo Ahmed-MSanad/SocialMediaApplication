@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar'
@@ -6,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { IProfileUser } from '../../core/interfaces/iprofile-user';
 
 
 export type MenuItem = {
@@ -55,10 +57,28 @@ export class SideBarComponent {
 
   profilePicSize = computed(() => this.collapsed() ? '32px' : '112px');
 
+  _authService = inject(AuthService);
+
   logOut(){
+    this._authService.signOut();
   }
 
+
+  currentUser: IProfileUser | null = null;
   ngOnInit(): void {
+    this._authService.currentUser().subscribe({
+      next: (res) => {
+        this.currentUser = res;
+      },
+      error: (error) => {
+        console.log('Error in CurrentUser in side-bar component', error);
+        if (error.status === 401 || error.status === 403) {
+          console.log('User is not authorized. Redirecting to login...');
+        } else {
+          console.log('Failed to fetch user profile:', error.message);
+        }
+      }
+    });
   }
 
   

@@ -5,9 +5,9 @@ const router = Router();
 
 router.post("/post",isAuthenticate,postService.createPost)
 
-router.delete("/post/:id",postService.deletePost)
+router.delete("/post/:id",isAuthenticate,postService.deletePost)
 
-router.patch("/post/:id",postService.editPost)
+router.patch("/post/:id",isAuthenticate,postService.editPost)
 
 router.get("/myposts",isAuthenticate,postService.getMyPosts)
 

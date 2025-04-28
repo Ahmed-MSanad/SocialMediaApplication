@@ -1,6 +1,6 @@
 export interface IProfileUser {
     uid: string;
-    displayName: string;
+    fullName: string;
     email: string;
-    photoURL: string;
+    profilePicture: string;
 }

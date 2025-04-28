@@ -35,12 +35,19 @@ export const createPost = asyncHandler(async (req, res) => {
 
 export const deletePost = asyncHandler(async (req, res) => {
     try {
+        const userId = req.authUser._id;
         const { id } = req.params;
-        const deletedPost = await Post.findByIdAndDelete(id);
+        const post = await Post.findById(id);
 
-        if (!deletedPost) {
+        if (!post) {
             return res.status(404).json({ message: "Post Not Found" });
         }
+
+        if(!post.userId.equals(userId)){
+            return res.status(401).json({message: "Unauthorized To Remove The Post"});
+        }
+
+        await post.deleteOne();
 
         return res.status(200).json({ message: "Post Deleted Successfully" });
 
@@ -52,6 +59,7 @@ export const deletePost = asyncHandler(async (req, res) => {
 
 export const editPost = asyncHandler(async (req, res) => {
     try {
+        const userId = req.authUser._id;
         const { id } = req.params
         const { content, image } = req.body
         if (!content && !image) {
@@ -60,19 +68,23 @@ export const editPost = asyncHandler(async (req, res) => {
             });
         }
 
-        const updateData = {};
-        updateData.content = content || null;
-        updateData.image = image || null;
+        const newData = {};
+        newData.content = content || null;
+        newData.image = image || null;
 
-        const updatedPost = await Post.findByIdAndUpdate(
-            id,
-            updateData,
-            { new: true }
-        );
+        const post = await Post.findById(id);
 
-        if (!updatedPost) {
+        if (!post) {
             return res.status(404).json({ message: "Post Not Found" });
         }
+
+        if(!post.userId.equals(userId)){
+            return res.status(401).json({message: "Unauthorized To Edit The Post"});
+        }
+
+        Object.assign(post, newData);
+
+        await post.save();
 
         return res.status(200).json({ message: "Post Updated Successfully" });
     }

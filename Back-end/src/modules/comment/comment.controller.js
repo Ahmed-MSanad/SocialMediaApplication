@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/post/:postId/comment",isAuthenticate,commentService.createComment);
 
-router.delete("/post/:postId/comment/:commentId",commentService.deleteComment);
+router.delete("/post/:postId/comment/:commentId",isAuthenticate,commentService.deleteComment);
 
 router.get("/post/:postId/comments",commentService.getPostComments);
 
