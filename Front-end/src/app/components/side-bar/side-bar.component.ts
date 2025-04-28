@@ -74,6 +74,7 @@ export class SideBarComponent {
     this._authService.currentUser().subscribe({
       next: (res) => {
         this.currentUser = res;
+        console.log(this.currentUser);
       },
       error: (error) => {
         console.log('Error in CurrentUser in side-bar component', error);

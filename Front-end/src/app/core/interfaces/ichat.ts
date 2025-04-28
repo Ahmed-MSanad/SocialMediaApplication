@@ -4,8 +4,8 @@ export interface IChat {
     id : string,
     lastMessage? : string,
     // lastMessageDate? : Timestamp | undefined,
-    userIds : string[],
-    users : IProfileUser[],
+    // userIds : string[],
+    // users : IProfileUser[],
 
 // picture and name of the user sent the message
     chatPic? : string, 
@@ -15,5 +15,6 @@ export interface IChat {
 export interface IMessage{
     text : string,
     senderId : string,
+    createdAt : string
     // sentDate : Timestamp | undefined,
 }

@@ -1,1 +1,43 @@
-<p>messages works!</p>
+<section>
+    <div>
+        <div class="flex items-center space-x-5 mb-4">
+            <img [src]="_ChatService.currentChattingUser()?.profilePicture" class="w-14 h-14 rounded-full object-cover" />
+            <h2 class="!my-0 dark:!text-white">{{_ChatService.currentChattingUser().fullName}}</h2>
+            
+
+            <button (click)="GetMessages()" class="bg-cyan-400 rounded-lg px-4 py-2">Get Messages</button>
+        </div>
+        
+        
+        <mat-divider></mat-divider>
+        
+        
+        <div #chatArea class="h-[calc(100vh-350px)] bg-white w-full flex flex-col overflow-y-auto">
+            @if(chatMessages && chatMessages.length){
+                @for(message of chatMessages; track $index){
+                    <div class="flex w-full items-center p-2 first:mt-auto" [ngClass]="currentUser?._id === message.senderId ? 'justify-end' : 'justify-start'">
+                        <div class="relative p-3 pe-28 pb-6 text-xl font-bold rounded-lg" [ngClass]="currentUser?._id === message.senderId ? 'bg-rose-300' : 'bg-rose-50'"> 
+                            {{message.text}}
+                            <span class="absolute right-[5px] bottom-[5px] text-[rgba(0,0,0,0.6)] text-sm">{{message.createdAt}}</span>
+                        </div> 
+                    </div>
+                }
+            }
+            @else {
+            }
+            <div #endOfChat></div>
+        </div>
+        
+        
+        
+        <div #inputMessages>
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput placeholder="Input your Message..." [(ngModel)]="message" (keydown.enter)="sendMessage()" />
+                <button mat-icon-button matSuffix>
+                    <mat-icon (click)="sendMessage()">send</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        
+        </div>
+</section>

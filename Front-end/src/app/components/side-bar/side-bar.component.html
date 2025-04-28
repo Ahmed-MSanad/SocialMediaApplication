@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z3 relative z-10 flex justify-between items-center p-4 !h-[90px] !bg-cyan-600 dark:!bg-[--main-dark-color] dark:!text-white">
+<mat-toolbar class="mat-elevation-z3 relative z-10 flex justify-between items-center p-4 !h-[90px] !bg-cyan-500 dark:!bg-[--main-dark-color] dark:!text-white">
     <div class="flex items-center">
         <button mat-icon-button (click)="collapsed.set(!collapsed())">
             <mat-icon>menu</mat-icon>
@@ -6,23 +6,23 @@
         <h2 class="text-xl">Chat App</h2>
     </div>
 
-    <div class="flex items-center space-x-4">
-        <h3 class="text-lg hidden lg:block">Hello userName</h3>
-        <div>
-            <button (click)="setProfile()"><img src="user_1.png" alt="" class="rounded-full w-16 h-16 object-cover"></button>
+    <div class="flex items-center">
+        <h3 class="text-lg hidden lg:block mr-5">Hello {{currentUser?.fullName}}</h3>
+        <div class="mx-5">
+            <button (click)="setProfile()"><img [src]="this.currentUser?.profilePicture" alt="" class="rounded-full w-16 h-16 object-cover"></button>
         </div>
         <button class="hidden lg:block py-2 px-4 bg-cyan-300 hover:bg-cyan-500 duration-200 rounded-lg shadow text-sm font-medium" (click)="logOut()">Log Out</button>
     </div>
 </mat-toolbar>
 <mat-sidenav-container class="h-[calc(100vh-90px)] dark:!bg-black">
-    <mat-sidenav opened mode="side" class="fixed left-0 top-0 bottom-0 !bg-cyan-600 dark:!bg-[--main-dark-color] dark:!text-white" [style.width]="sidenavWidth()">
+    <mat-sidenav opened mode="side" class="fixed left-0 top-0 bottom-0 !bg-cyan-500 dark:!bg-[--main-dark-color] dark:!text-white" [style.width]="sidenavWidth()">
         <!-- <mat-sidenav></mat-sidenav> => has 2 states => opened | closed -->
         <!-- it has 3 mode options => push - over - side -->
         <div class="side-nav-header text-center mt-6">
-            <img [src]="false ? 'this.currentUser?.photoURL' : 'user_1.png'" alt="" class="mx-auto rounded-full mb-4 object-cover" [style.width]="profilePicSize()" [style.height]="profilePicSize()">
+            <img [src]="this.currentUser?.profilePicture ? this.currentUser?.profilePicture : '../../../assets/images/user_1.png'" alt="" class="mx-auto rounded-full mb-4 object-cover" [style.width]="profilePicSize()" [style.height]="profilePicSize()">
             <div class="header-text overflow-hidden h-16" [class]="{'opacity-0':collapsed(), '!h-0':collapsed()}">
                 <h2 class="text-sm m-0">My Account</h2>
-                <p class="text-xs">this.currentUser?.displayName</p>
+                <p class="text-xs">{{this.currentUser?.fullName}}</p>
             </div>
         </div>
         <mat-nav-list>

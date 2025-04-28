@@ -6,6 +6,12 @@ export const register = asyncHandler(async (req, res, next) => {
   try {
     console.log('Request body:', req.body);
     const { fullName, email, password, phone, gender, profilePicture } = req.body;
+    console.log("fullName:", fullName);
+    console.log("email:", email);
+    console.log("password:", password);
+    console.log("phone:", phone);
+    console.log("gender:", gender);
+    console.log("profilePicture:", profilePicture);
     const createdUser = await User.create({
       fullName,
       email,
@@ -14,11 +20,13 @@ export const register = asyncHandler(async (req, res, next) => {
       gender,
       profilePicture
     });
+    console.log("register1");
     return res.status(201).json({
       success: true,
       message: messages.user.createdSuccessfully
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Server error', error });
   }
 
