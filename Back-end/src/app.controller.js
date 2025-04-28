@@ -1,4 +1,5 @@
 import connectDb from "./db/connection.js";
+import cors from 'cors';
 import authRouter from "./modules/auth/auth.controller.js";
 import userRouter from "./modules/user/user.controller.js";
 import { globalError } from "./utils/Errors/global-error.js";
@@ -8,6 +9,11 @@ import postRoute from './modules/post/post.controller.js';
 import commentRoute from './modules/comment/comment.controller.js';
 
 const bootstrap = async (app, express) => {
+  app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+  }));
+
   app.use(express.json());
 
   await connectDb();
