@@ -4,7 +4,8 @@ import { asyncHandler } from "../../utils/index.js"
 export const createPost = asyncHandler(async (req, res) => {
     try {
         const userId = req.authUser._id;
-        const userName = req.authUser.userName;
+        const userName = req.authUser.fullName;
+        
         const { content, image } = req.body;
 
         if (!content && !image) {
@@ -21,15 +22,13 @@ export const createPost = asyncHandler(async (req, res) => {
             comments: []
         };
 
-        const newPost = await Post.create(post);
 
-        res.status(201).json({
-            message: "Post created successfully!",
-            post: newPost,
-        });
+        await Post.create(post);
+
+        return res.status(201).json({ message: "Post Created Successfully" });
     }
     catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).json({ error: error.message });
     }
 
 })
@@ -40,16 +39,13 @@ export const deletePost = asyncHandler(async (req, res) => {
         const deletedPost = await Post.findByIdAndDelete(id);
 
         if (!deletedPost) {
-            return res.status(404).json({
-                message: 'Post not found.'
-            });
+            return res.status(404).json({ message: "Post Not Found" });
         }
 
-        res.status(200).json({
-            message: 'Post deleted successfully.'
-        });
+        return res.status(200).json({ message: "Post Deleted Successfully" });
+
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).json({ error: error.message });
     }
 
 });
@@ -65,8 +61,8 @@ export const editPost = asyncHandler(async (req, res) => {
         }
 
         const updateData = {};
-        if (content !== undefined) updateData.content = content;
-        if (image !== undefined) updateData.image = image;
+        updateData.content = content || null;
+        updateData.image = image || null;
 
         const updatedPost = await Post.findByIdAndUpdate(
             id,
@@ -75,13 +71,13 @@ export const editPost = asyncHandler(async (req, res) => {
         );
 
         if (!updatedPost) {
-            return res.status(404).json({ message: "Post not found" });
+            return res.status(404).json({ message: "Post Not Found" });
         }
 
-        return res.status(200).json({ message: "Post updated successfully", });
+        return res.status(200).json({ message: "Post Updated Successfully" });
     }
     catch(error){
-        return res.status(500).json("Internal Server Error");
+        return res.status(500).json({ error: error.message });
     }
 });
 
@@ -97,6 +93,6 @@ export const getMyPosts = asyncHandler(async (req, res) => {
         return res.status(200).json({ posts });
     }
     catch (error) {
-        return res.status(500).json("Internal Server Error");
+        return res.status(500).json({ error: error.message });
     }
 });

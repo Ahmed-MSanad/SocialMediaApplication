@@ -1,22 +1,18 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
-const commentSchema = new Schema(
-    {
-        name: { type: String, required: true },
-        text: { type: String, required: true },
-    },
-    {
-        timestamps: true
-    }
-)
 
 const postSchema = new Schema(
     {
-        userId: { type: Schema.Types.ObjectId, ref: "user", required: true },
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         userName: { type: String, required: true },
         content: {type: String},
         image: { type: String },
-        comments: [commentSchema],
+        comments: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Comment"
+            }
+        ],
     },
     {
         timestamps: true
