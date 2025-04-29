@@ -2,7 +2,7 @@ import { Post } from "../../db/models/post.model.js"
 import { asyncHandler } from "../../utils/index.js"
 
 export const createPost = asyncHandler(async (req, res) => {
-    try {
+    
         const userId = req.authUser._id;
         const userName = req.authUser.fullName;
         
@@ -26,15 +26,13 @@ export const createPost = asyncHandler(async (req, res) => {
         await Post.create(post);
 
         return res.status(201).json({ message: "Post Created Successfully" });
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
+    
+    
 
 })
 
 export const deletePost = asyncHandler(async (req, res) => {
-    try {
+    
         const userId = req.authUser._id;
         const { id } = req.params;
         const post = await Post.findById(id);
@@ -51,14 +49,12 @@ export const deletePost = asyncHandler(async (req, res) => {
 
         return res.status(200).json({ message: "Post Deleted Successfully" });
 
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
+    
 
 });
 
 export const editPost = asyncHandler(async (req, res) => {
-    try {
+    
         const userId = req.authUser._id;
         const { id } = req.params
         const { content, image } = req.body
@@ -87,14 +83,12 @@ export const editPost = asyncHandler(async (req, res) => {
         await post.save();
 
         return res.status(200).json({ message: "Post Updated Successfully" });
-    }
-    catch(error){
-        return res.status(500).json({ error: error.message });
-    }
+    
+    
 });
 
 export const getMyPosts = asyncHandler(async (req, res) => {
-    try {
+    
         const userId = req.authUser._id;
         const posts = await Post.find({ userId });
         if (!posts || posts.length === 0) {
@@ -103,8 +97,8 @@ export const getMyPosts = asyncHandler(async (req, res) => {
             });
         }
         return res.status(200).json({ posts });
-    }
-    catch (error) {
+    
+    
         return res.status(500).json({ error: error.message });
-    }
+    
 });

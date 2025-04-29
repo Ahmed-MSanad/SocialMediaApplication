@@ -24,7 +24,7 @@ export class AuthService {
         console.log('No token found in localStorage');
         return of(null);
       }
-      return this.httpClient.get<IProfileUser>(`http://localhost:5001/api/user/profile`, {
+      return this.httpClient.get<IProfileUser>(`http://localhost:3000/api/user/profile`, {
         headers: {
           'Authorization': `bearer ${token}`,
           'Content-Type':'application/json'
@@ -37,12 +37,12 @@ export class AuthService {
 
 
   register(data : ISignupCredentials) : Observable<any>{
-    return this.httpClient.post(`http://localhost:5001/api/auth/register`, data);
+    return this.httpClient.post(`http://localhost:3000/api/auth/register`, data);
   }
 
 
   login(data : ISigninCredentials){
-    return this.httpClient.post(`http://localhost:5001/api/auth/login`, data);
+    return this.httpClient.post(`http://localhost:3000/api/auth/login`, data);
   }
 
 

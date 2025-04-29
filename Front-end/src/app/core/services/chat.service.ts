@@ -16,7 +16,7 @@ export class ChatService {
   get myChats$() : Observable<IProfileUser[]>{
     if(typeof localStorage != 'undefined'){
       const token = localStorage.getItem('token')?.trim();
-      return this.httpClient.get<IProfileUser[]>(`http://localhost:5001/api/message/users`, {
+      return this.httpClient.get<IProfileUser[]>(`http://localhost:3000/api/message/users`, {
         headers: {
           'Authorization': `bearer ${token}`,
           'Content-Type':'application/json'
@@ -31,7 +31,7 @@ export class ChatService {
   addChatMessage(sendToUserId : string, text : string) : Observable<any>{
     if(typeof localStorage != 'undefined'){
       const token = localStorage.getItem('token')?.trim();
-      return this.httpClient.post(`http://localhost:5001/api/message/send/${sendToUserId}`, {text}, {
+      return this.httpClient.post(`http://localhost:3000/api/message/send/${sendToUserId}`, {text}, {
         headers: {
           'Authorization': `bearer ${token}`,
           'Content-Type':'application/json'
@@ -47,7 +47,7 @@ export class ChatService {
   getChatMessages$(otherUserId : string) : Observable<IMessage[]>{
     if(typeof localStorage != 'undefined'){
       const token = localStorage.getItem('token')?.trim();
-      return this.httpClient.get<IMessage[]>(`http://localhost:5001/api/message/${otherUserId}`, {
+      return this.httpClient.get<IMessage[]>(`http://localhost:3000/api/message/${otherUserId}`, {
         headers: {
           'Authorization': `bearer ${token}`,
           'Content-Type':'application/json'

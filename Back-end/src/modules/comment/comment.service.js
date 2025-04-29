@@ -3,7 +3,7 @@ import { Post } from "../../db/models/post.model.js";
 import { asyncHandler, messages } from "../../utils/index.js";
 
 export const createComment = asyncHandler(async (req, res) => {
-    try {
+    
         const { postId } = req.params;
         const userId = req.authUser._id;
         const name = req.authUser.fullName;
@@ -23,14 +23,11 @@ export const createComment = asyncHandler(async (req, res) => {
         await post.save()
 
         res.status(201).json({ message: "Comment Created Successfully" });
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+    
 })
 
 export const deleteComment = asyncHandler(async (req, res) => {
-    try {
+ 
         const userId = req.authUser._id;
         const { postId, commentId } = req.params;
         const post = await Post.findById(postId);
@@ -53,23 +50,17 @@ export const deleteComment = asyncHandler(async (req, res) => {
         await Comment.findByIdAndDelete(commentId);
 
         return res.status(200).json({ message: "Comment Deleted Successfully" });
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
+    
 })
 
 export const getPostComments = asyncHandler(async (req, res) => {
-    try {
+    
         const { postId } = req.params;
         const post = await Post.findById(postId).populate('comments');
         if (!post) {
             return res.status(404).json({ message: "Post Not Found" });
         }
         return res.status(200).json({ comments: post.comments });
-    }
-    catch(error){
-        return res.status(500).json({ error: error.message });
-    }
+    
 
 })
